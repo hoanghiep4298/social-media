@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "target": "es6",
+      "baseUrl": "./",
+      "paths": {
+          "@root/*": ["./*"],
+          "@models/*": ["./models/*"],
+          "@graphql/*": ["./graphql/*"],
+          "@config/*": ["./config/*"],
+          "@helpers/*": ["./helpers/*"]
+      }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}

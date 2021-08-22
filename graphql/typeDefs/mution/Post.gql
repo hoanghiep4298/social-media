@@ -1,0 +1,13 @@
+extend type Mutation {
+  Post: PostOps
+}
+
+type PostOps {
+  Create(input: PostInput): Int
+}
+
+input PostInput {
+  body: String
+  username: String
+  createdAt: String
+}
