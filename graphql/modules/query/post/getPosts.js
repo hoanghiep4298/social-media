@@ -1,7 +1,7 @@
 const PostModel = require('@models/Post');
 const checkAuth = require('@helpers/checkAuth');
 
-module.exports = async (_, args, context) => {
+module.exports = async (_, __, context) => {
   const response = {
     success: false,
     message: ''
@@ -10,19 +10,19 @@ module.exports = async (_, args, context) => {
   try {
     const authInfo = checkAuth(context);
 
-    const { id: _id } = args;
-    const post = await PostModel.findOne({ _id, username: authInfo.username }).lean();
-    if (!post) {
+    let posts = await PostModel.find({ username: authInfo.username }).sort({ createdAt: -1 }).lean();
+    if (!posts) {
       response.message = 'Search failed';
       return response;
     }
 
-    return {
-      id: post._id,
-      username: post.username,
-      body: post.body,
-      comment: post.comment
-    };
+    posts = posts.map((item) => ({
+      id: item._id,
+      username: item.username,
+      body: item.body,
+      comments: item.comments
+    }));
+    return posts;
   } catch (err) {
     throw new Error(err);
   }

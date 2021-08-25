@@ -1,5 +1,6 @@
 module.exports = {
   Query: {
-    Posts: require('@graphql/modules/query/post/getPost')
+    getPosts: require('@root/graphql/modules/query/post/getPosts'),
+    getPost: require('@root/graphql/modules/query/post/getPost')
   }
-}
+};

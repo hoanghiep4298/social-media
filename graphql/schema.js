@@ -1,14 +1,10 @@
 const { join } = require('path');
 const { readdirSync, readFileSync } = require('fs');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
-const resolvers = require('./resolvers')
-const dirPath = join(__dirname, './typedefs');
-// const dirPath = readdirSync(join(__dirname, './typedefs'));
+const resolvers = require('./resolvers');
 
-let typeDefs = '';
-// let files = [];
 function getFileDeep(dirPath) {
-  let files = [];
+  const files = [];
   const fileList = readdirSync(dirPath, { withFileTypes: true });
   if (fileList && fileList.length === 0) return;
   fileList.forEach((dirent) => {
@@ -18,15 +14,17 @@ function getFileDeep(dirPath) {
       files.push(join(dirPath, dirent.name));
     }
   });
-  return files
+  return files;
 }
 
-const gqlFiles = getFileDeep(dirPath);
+const typeDefsPath = join(__dirname, './typeDefs');
+const gqlFiles = getFileDeep(typeDefsPath);
 
+let typeDefs = '';
 gqlFiles.forEach((filePath) => {
   if (filePath) {
     typeDefs += readFileSync((filePath), {
-      encoding: 'utf8',
+      encoding: 'utf8'
     });
   }
 });

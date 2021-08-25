@@ -1,5 +1,6 @@
 extend type Query {
-  Posts(filter: PostFilterInput): [Post]
+  getPosts(filter: PostFilterInput): [Post]
+  getPost(id: ID!): Post
 }
 
 type Post {
@@ -12,7 +13,7 @@ type Post {
 type Comment {
   body: String
   username: String,
-  createdAt: String
+  createdAt: Date
 }
 
 

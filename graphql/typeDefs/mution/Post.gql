@@ -3,11 +3,17 @@ extend type Mutation {
 }
 
 type PostOps {
-  Create(input: PostInput): Int
+  create(input: PostInput): createPostResponse
+  delete(id: ID!): DefaultResponse
 }
 
 input PostInput {
   body: String
+}
+
+type createPostResponse {
+  body: String
   username: String
-  createdAt: String
+  success: String
+  message: String
 }

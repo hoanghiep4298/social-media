@@ -3,3 +3,9 @@ interface Timestamps {
   createdAt: Date!
   updatedAt: Date!
 }
+
+# default response
+type DefaultResponse {
+  success: String!
+  message: String
+}
