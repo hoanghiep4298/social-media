@@ -20,8 +20,12 @@ module.exports = async (_, __, context) => {
       id: item._id,
       username: item.username,
       body: item.body,
-      comments: item.comments
+      comments: item.comments.map((cmt) => ({
+        id: cmt._id,
+        ...cmt
+      }))
     }));
+    
     return posts;
   } catch (err) {
     throw new Error(err);

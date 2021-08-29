@@ -1,5 +1,6 @@
 const PostModel = require('@models/Post');
 const checkAuth = require('@helpers/checkAuth');
+const pubsub = require('@helpers/redisPubSub');
 
 module.exports = async (args, context) => {
   const response = {
@@ -12,19 +13,21 @@ module.exports = async (args, context) => {
 
     const { body } = args.input;
 
-    const created = await PostModel.create({
+    const newPost = await PostModel.create({
       body,
       username: authInfo.username,
       createdAt: new Date()
     });
     
-    if (!created?._id) {
+    if (!newPost?._id) {
       return response;
     }
     
+    pubsub.publish('NEW_POST', { newPost });
+
     return {
-      body: created.body,
-      username: created.username,
+      body: newPost.body,
+      username: newPost.username,
       success: true
     };
   } catch (err) {

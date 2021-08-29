@@ -4,15 +4,26 @@ extend type Query {
 }
 
 type Post {
-  id: String!
+  id: ID
   username: String
   body: String
   comments: [Comment]
+  likes: [Like]
+  createdAt: Date
+  success: String
+  message: String
 }
 
 type Comment {
-  body: String
-  username: String,
+  id: ID
+  body: String!
+  username: String!,
+  createdAt: Date!
+}
+
+type Like {
+  id: ID
+  username: String
   createdAt: Date
 }
 
