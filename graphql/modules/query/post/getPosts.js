@@ -8,7 +8,8 @@ module.exports = async (_, __, context) => {
   };
   
   try {
-    const authInfo = checkAuth(context);
+    // const authInfo = checkAuth(context);
+    const authInfo = { username: 'hiep123' };
 
     let posts = await PostModel.find({ username: authInfo.username }).sort({ createdAt: -1 }).lean();
     if (!posts) {
@@ -23,7 +24,10 @@ module.exports = async (_, __, context) => {
       comments: item.comments.map((cmt) => ({
         id: cmt._id,
         ...cmt
-      }))
+      })),
+      likeCount: item.likes?.length,
+      commentCount: item.comments?.length,
+      createdAt: item.createdAt
     }));
     
     return posts;

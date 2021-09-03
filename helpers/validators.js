@@ -10,7 +10,7 @@ module.exports = {
           'string.max': 'Username should have a max length of 30'
         }),
       password: joi.string().min(6).required(),
-      confirmPassword: joi.string().required(),
+      confirmPassword: joi.any().valid(joi.ref('password')).required().messages({ 'any.only': 'The password confirmation does not match' }),
       email: joi.string().email().required()
     });
 

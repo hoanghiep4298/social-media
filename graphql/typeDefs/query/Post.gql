@@ -10,6 +10,8 @@ type Post {
   comments: [Comment]
   likes: [Like]
   createdAt: Date
+  likeCount: Int
+  commentCount: Int
   success: String
   message: String
 }

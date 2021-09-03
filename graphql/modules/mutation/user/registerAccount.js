@@ -47,6 +47,8 @@ module.exports = async (_, args, context) => {
       success: true
     };
   } catch (err) {
-    throw new Error(err);
+    console.log(err);
+    response.message = err.message;
+    return response;
   }
 };
