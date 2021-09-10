@@ -26,8 +26,10 @@ module.exports = async (args, context) => {
     pubsub.publish('NEW_POST', { newPost });
 
     return {
-      body: newPost.body,
-      username: newPost.username,
+      ...(newPost._doc),
+      id: newPost._id,
+      likeCount: 0,
+      commentCount: 0,
       success: true
     };
   } catch (err) {

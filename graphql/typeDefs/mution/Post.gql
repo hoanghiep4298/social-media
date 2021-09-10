@@ -11,12 +11,18 @@ type PostOps {
 }
 
 input PostInput {
-  body: String
+  body: String!
 }
 
 type createPostResponse {
+  id: ID
   body: String
   username: String
+  createdAt: Date
+  likeCount: Int 
+  comments: [Comment]
+  likes: [Like]
+  commentCount: Int
   success: String
   message: String
 }

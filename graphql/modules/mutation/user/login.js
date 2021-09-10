@@ -28,7 +28,9 @@ module.exports = async (_, args) => {
     const token = jwt.sign({
       id: user._id,
       username: user.username
-    }, SECRET_KEY_JWT);
+    },
+    SECRET_KEY_JWT,
+    { expiresIn: '1h' });
     
     return {
       id: user._id,
@@ -39,6 +41,8 @@ module.exports = async (_, args) => {
       success: true
     };
   } catch (err) {
-    throw new Error(err);
+    console.log(err);
+    response.message = err.message;
+    return response;
   }
 };

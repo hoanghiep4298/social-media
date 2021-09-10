@@ -4,7 +4,7 @@ import moment from 'moment';
 
 function PostCard({ post: { body, createdAt, id, username, likeCount, commentCount, likes } }) {
   return (
-    <Card>
+    <Card style={{width: '100%'}}>
       <Card.Content>
         <Image
           floated='right'
