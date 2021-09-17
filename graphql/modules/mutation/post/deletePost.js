@@ -10,7 +10,7 @@ module.exports = async (args, context) => {
 
   try {
     const authInfo = checkAuth(context);
-    const { id: _id } = args;
+    const { postId: _id } = args;
 
     const user = await UserModel.findOne({ _id: authInfo.id });
     if (!user?._id) {

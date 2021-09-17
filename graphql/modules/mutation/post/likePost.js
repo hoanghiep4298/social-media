@@ -3,7 +3,7 @@ const UserModel = require('@models/User');
 const checkAuth = require('@helpers/checkAuth');
   
 module.exports = async (args, context) => {
-  const response = {
+  let response = {
     success: false,
     message: ''
   };
@@ -27,30 +27,37 @@ module.exports = async (args, context) => {
     const likeObj = post.likes?.find((item) => item.username === authInfo.username);
     if (likeObj) {
       // => unlike
-      const unlike = await PostModel.updateOne({
+      const unlike = await PostModel.findOneAndUpdate({
         _id: postId
       }, {
         $pull: {
           likes: { username: authInfo.username }
         }
+      }, {
+        new: true
       });
 
       if (unlike?.nModified === 1) response.success = true;
-      return response;
-    }
-    
-    const like = await PostModel.updateOne({
-      _id: postId
-    }, {
-      $push: {
-        likes: {
-          username: authInfo.username,
-          createdAt: new Date()
+      response = { ...unlike._doc, id: unlike._id, success: true };
+    } else {
+      const like = await PostModel.findOneAndUpdate({
+        _id: postId
+      }, {
+        $push: {
+          likes: {
+            username: authInfo.username,
+            createdAt: new Date()
+          }
         }
+      }, {
+        new: true
+      });
+  
+      if (like?._id) {
+        response = { ...like._doc, id: like._id, success: true };
       }
-    });
-    
-    if (like?.nModified === 1) response.success = true;
+    }
+
     return response;
   } catch (err) {
     throw new Error(err);

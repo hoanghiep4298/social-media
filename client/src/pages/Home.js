@@ -14,8 +14,6 @@ function Home() {
     data
   } = useQuery(FETCH_POSTS_QUERY);
 
-  console.log(data.getPosts);
-
   const posts = data?.getPosts;
 
   return (
