@@ -17,8 +17,12 @@ function PostForm() {
       const data = proxy.readQuery({
         query: FETCH_POSTS_QUERY
       });
+      console.log('add post >>', result);
+
       data.getPosts = [result.data.Post.createPost, ...data.getPosts];
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
+      console.log('get posts >>', data);
+
       values.body = '';
     }
   });
@@ -33,7 +37,7 @@ function PostForm() {
         <h2>Create a post:</h2>
         <Form.Field>
           <Form.Input
-            placeholder="Hi World!"
+            placeholder="How are you today?"
             name="body"
             onChange={onChange}
             value={values.body}

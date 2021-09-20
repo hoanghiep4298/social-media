@@ -6,13 +6,9 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth'
 import gql from 'graphql-tag';
 import LikeButton from './LikeButton';
-
+import DeleteButton from './DeleteButton';
 function PostCard({ post: { body, createdAt, id, username, likeCount, commentCount, likes } }) {
   const { user } = useContext(AuthContext);
-
-  // const [deletePost, { error }] = useMutation(DELETE_POST_MUTATION, {
-  //   variables: { id }
-  // });
 
   return (
     <Card style={{width: '100%'}}>
@@ -31,7 +27,7 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
       <Card.Content extra>
         <LikeButton user={user} post={{ id, likes, likeCount }}/>
         
-        <Button labelPosition='right' as={Link} to={`/post/${id}`}>
+        <Button labelPosition='right' as={Link} to={`/posts/${id}`}>
           <Button basic color='blue'>
             <Icon name='comment' />
           </Button>
@@ -40,27 +36,10 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
           </Label>
         </Button>
 
-        {
-          user && user.username === username && (
-            <Button as='div' color='linkedin' floated='right'>
-              <Icon name='trash' style={{margin: 0}}/>
-            </Button>
-          )
-        }
+        { user && user.username === username && <DeleteButton postId={ id } /> }
       </Card.Content>
     </Card>
   )
 };
-
-const DELETE_POST_MUTATION = gql`
-  mutation deletePost($id: ID!) {
-    Post {
-      deletePost(id: $id){
-        success
-        message
-      }
-    }
-  }
-`
 
 export default PostCard;

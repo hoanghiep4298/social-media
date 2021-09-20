@@ -14,7 +14,6 @@ function Login(props) {
   
   const [loginUser, { loading, data }] = useMutation(LOGIN_USER, {
     update(_, result) {
-      console.log('login >>>', result.data.login);
       if (result.data?.login?.success) {
         context.login(result.data.login);
         props.history.push('/');

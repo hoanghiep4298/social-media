@@ -23,6 +23,6 @@ type createPostResponse {
   comments: [Comment]
   likes: [Like]
   commentCount: Int
-  success: String
+  success: Boolean
   message: String
 }

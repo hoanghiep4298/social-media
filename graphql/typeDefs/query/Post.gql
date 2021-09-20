@@ -12,7 +12,7 @@ type Post {
   createdAt: Date
   likeCount: Int
   commentCount: Int
-  success: String
+  success: Boolean
   message: String
 }
 

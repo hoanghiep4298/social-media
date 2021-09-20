@@ -8,10 +8,10 @@ module.exports = async (_, args, context) => {
   };
   
   try {
-    const authInfo = checkAuth(context);
+    // const authInfo = checkAuth(context);
 
     const { id: _id } = args;
-    const post = await PostModel.findOne({ _id, username: authInfo.username }).lean();
+    const post = await PostModel.findOne({ _id }).lean();
     if (!post) {
       response.message = 'Search failed';
       return response;
@@ -19,9 +19,10 @@ module.exports = async (_, args, context) => {
 
     return {
       id: post._id,
-      username: post.username,
-      body: post.body,
-      comment: post.comment
+      ...post,
+      likeCount: post.likes?.length,
+      commentCount: post.comments?.length,
+      success: true
     };
   } catch (err) {
     throw new Error(err);

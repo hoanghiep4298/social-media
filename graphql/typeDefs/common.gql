@@ -6,6 +6,6 @@ interface Timestamps {
 
 # default response
 type DefaultResponse {
-  success: String!
+  success: Boolean!
   message: String
 }
